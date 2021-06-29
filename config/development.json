@@ -1,0 +1,8 @@
+{
+    "name" : "Vildy-dev",
+    "database" : {
+        "host" : "12.131.113.211",
+        "name" : "vildy-dev",
+        "port" : 3306
+    }
+}
