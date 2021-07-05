@@ -2,16 +2,24 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/:id", (req, res) => {
-    getUser(req.params.id, user => {
-        getRepoistories(user.github, repos => {
-            console.log(repos)
-            getCommits(repos[0], commits => {
-                console.log(commits);
-            });
-        });
-    });
+    getUser(req.params.id, getRepoistoriesForUser);
     res.send("done;");
 });
+
+
+function getRepoistoriesForUser(user) {
+    getRepoistories(user.github, getCommits);
+}
+
+function getCommits(repos) {
+    for (let i = 0; i < repos.length; i++) {
+        getCommits(repos[i], displayCommits);
+    }
+}
+
+function displayCommits(commits) {
+    console.log(commits);
+}
 
 function getUser(id, callback) {
     setTimeout(() => {
@@ -43,11 +51,11 @@ function getRepoistories(username, callback) {
 
 function getCommits(repo, callback) {
     setTimeout(() => {
-        callback([
-            "12",
-            "12124",
-            "13413412"
-        ]);
+       callback([
+           "init commit",
+           "second commit",
+           "install jenkins"
+       ])
     }, 1500);
 }
 module.exports = router;
